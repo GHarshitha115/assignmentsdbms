@@ -190,23 +190,3 @@ Q13="Write your query here"
 
 
 
-
-
-'''
-SELECT DISTINCT fname,lname FROM Director INNER JOIN Movie WHERE(SELECT COUNT(id) FROM Director)>=1 AND `Movie`.name Like'Star Trek%' Limit 10;
-select movies. title
-from movies , play in
-where play in.name=’Daniel Craig’ and play in.mid = movies.mid order by movies. title ASC;
-
-SELECT DISTINCT mov_year 
-FROM movie 
-WHERE mov_id IN (
-SELECT mov_id 
-FROM rating 
-WHERE rev_stars>3) 
-ORDER BY mov_year;
-
-SELECT name
-FROM Reviewer
-WHERE (SELECT COUNT(*) FROM Rating WHERE Rating.rId = Reviewer.rId) >= 3;'''
-Q9="SELECT fname,lname FROM Director WHERE (SELECT COUNT(*) FROM Director WHERE `Director`.id=`Movie`.id)>=4 AND `Movie`.year=2001 ORDER BY fname ASC,lname DESC"
