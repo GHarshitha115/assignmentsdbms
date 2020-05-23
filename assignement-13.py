@@ -1,4 +1,4 @@
-def write_data(sql_query):
+   def write_data(sql_query):
 	import sqlite3
 	connection = sqlite3.connect("selected_students.sqlite3")
 	crsr = connection.cursor() 
@@ -77,7 +77,12 @@ class Student:
            cls.c=key
            cls.d=value
         e=key.split("__")
-        if e[1]=='lt':
+        if e[0] not in('student_id','name','age','score'):
+            raise InvalidField
+        if (len(e))==1:
+            sql_query="select * from Student where {}='{}'".format(e[0],cls.d)
+            obj=read_data(sql_query)
+        elif e[1]=='lt':
             sql_query="select * from Student where {}<{}".format(e[0],cls.d)
             obj=read_data(sql_query)
         elif e[1]=='lte':
@@ -92,15 +97,19 @@ class Student:
         elif e[1]=='neq':
             sql_query="select * from Student where {}!='{}'".format(e[0],cls.d)
             obj=read_data(sql_query)
-	elif e[1]=='in':
+        elif e[1]=='in':
             sql_query="select * from Student where {} in {}".format(e[0],tuple(cls.d))
+            obj=read_data(sql_query)
+        elif e[1]=='contains':
+            sql_query="select * from Student where {} like '%{}%'".format(e[0],cls.d)
             obj=read_data(sql_query)
         for i in range (len(obj)):
             obj1=Student(obj[i][1],obj[i][2],obj[i][3])
             obj1.student_id=obj[i][0]
             objects.append(obj1)
         return objects
-        
+
+
        
         
         
@@ -109,9 +118,11 @@ class Student:
                 
                 
             
-            
+          
+'''  
         
-'''
-selected_students = Student.filter(age__lt=34)
+selected_students = Student.filter(age=40)
+#selected_students = Student.filter(age__contains="Maude Vanhorne")
 print(selected_students)
+
 '''
