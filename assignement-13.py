@@ -92,6 +92,9 @@ class Student:
         elif e[1]=='neq':
             sql_query="select * from Student where {}!='{}'".format(e[0],cls.d)
             obj=read_data(sql_query)
+	elif e[1]=='in':
+            sql_query="select * from Student where {} in {}".format(e[0],tuple(cls.d))
+            obj=read_data(sql_query)
         for i in range (len(obj)):
             obj1=Student(obj[i][1],obj[i][2],obj[i][3])
             obj1.student_id=obj[i][0]
